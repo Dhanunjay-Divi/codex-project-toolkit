@@ -1,0 +1,68 @@
+#!/usr/bin/python3
+"""Launch Codebase Memory with one Codex project's private external index."""
+
+import hashlib
+import os
+from pathlib import Path
+import pwd
+import sqlite3
+import subprocess
+
+
+BIN = Path(__file__).resolve().parent
+
+
+def project_root():
+    cwd = Path.cwd().resolve(strict=True)
+    try:
+        result = subprocess.run(
+            ["/usr/bin/git", "-C", str(cwd), "rev-parse", "--show-toplevel"],
+            check=True, capture_output=True, text=True, timeout=2,
+        )
+        root = Path(result.stdout.strip()).resolve(strict=True)
+        if not cwd.is_relative_to(root):
+            root = cwd
+    except (OSError, ValueError, subprocess.SubprocessError):
+        root = cwd
+    if root in (Path("/"), Path.home().resolve()):
+        raise SystemExit("Codebase Memory requires a bounded project directory")
+    return root
+
+
+def main():
+    root = project_root()
+    key = hashlib.sha256(os.fsencode(root)).hexdigest()[:32]
+    state = Path("/Users/Shared") / ("cbm-%d" % os.getuid()) / key
+    for name in ("config", "cache", "runtime"):
+        directory = state / name
+        directory.mkdir(mode=0o700, parents=True, exist_ok=True)
+        directory.chmod(0o700)
+    config_db = state / "cache" / "_config.db"
+    with sqlite3.connect(config_db) as db:
+        db.execute("CREATE TABLE IF NOT EXISTS config (key TEXT PRIMARY KEY, value TEXT)")
+        db.executemany(
+            "INSERT OR REPLACE INTO config (key, value) VALUES (?, ?)",
+            (("auto_index", "false"), ("auto_watch", "false")),
+        )
+    user = pwd.getpwuid(os.getuid()).pw_name
+    env = {
+        "PATH": "/usr/bin:/bin:/usr/sbin:/sbin",
+        "LANG": "C",
+        "HOME": str(Path.home()),
+        "USER": user,
+        "LOGNAME": user,
+        "XDG_CONFIG_HOME": str(state / "config"),
+        "CBM_CACHE_DIR": str(state / "cache"),
+        "CBM_RUNTIME_DIR": str(state / "runtime"),
+        "CBM_ALLOWED_ROOT": str(root),
+        "CBM_LOG_LEVEL": "warn",
+    }
+    os.execve(
+        "/usr/bin/python3",
+        ["/usr/bin/python3", str(BIN / "mcp_guard.py"), str(BIN / "codebase-memory-mcp"), "--ui=false"],
+        env,
+    )
+
+
+if __name__ == "__main__":
+    main()

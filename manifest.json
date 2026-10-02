@@ -1,0 +1,35 @@
+{
+  "schema": 1,
+  "platform": "macos-arm64",
+  "rtk": {
+    "version": "0.49.0",
+    "url": "https://github.com/rtk-ai/rtk/releases/download/v0.49.0/rtk-aarch64-apple-darwin.tar.gz",
+    "archiveSha256": "bbbfebabb22686993a80da731aa4d5d35116fb8ae24abb00608efa028e13ae01",
+    "binarySha256": "055ef1cd1aa0afb96c854bddf43d24af10dcac5a6288ed44519cb1cc10b093a9",
+    "binary": "rtk"
+  },
+  "codebaseMemory": {
+    "version": "0.10.8",
+    "url": "https://github.com/DeusData/codebase-memory-mcp/releases/download/v0.10.8/codebase-memory-mcp-darwin-arm64.tar.gz",
+    "archiveSha256": "9bd840dfb3ec7eaef4f310382057adaa5b0e904df883104d03ffcf39836afd07",
+    "binarySha256": "2412e017268bef8f847f38d1b0f79f63185b38c27fe6fba637067bfc87c0eedf",
+    "binary": "codebase-memory-mcp"
+  },
+  "ruflo": {
+    "version": "3.41.2",
+    "cliVersion": "3.33.0",
+    "packageLockSha256": "9af7ae2fd379e0b08da454e6870f2fd8510ef131db36226e3dd56f48624b57d1"
+  },
+  "agencyAgents": {
+    "source": "https://github.com/msitarzewski/agency-agents",
+    "commit": "ad9264e309bd5e5422c04784372d7841b1e5d604"
+  },
+  "uiUxProMax": {
+    "source": "https://github.com/nextlevelbuilder/ui-ux-pro-max-skill",
+    "commit": "dcc40ff5133ef78276117db0cc34e7b83cc8aeba"
+  },
+  "ponytail": {
+    "source": "https://github.com/DietrichGebert/ponytail",
+    "commit": "e3ba2aa6f1e6f0bc4d69eb09c9f0d0a93af56156"
+  }
+}
