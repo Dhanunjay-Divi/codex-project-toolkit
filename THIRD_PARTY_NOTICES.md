@@ -11,4 +11,6 @@ This repository includes reviewed integration code and snapshots of these projec
 | UI/UX Pro Max | https://github.com/nextlevelbuilder/ui-ux-pro-max-skill | MIT-licensed skill, pinned in manifest |
 | Ponytail | https://github.com/DietrichGebert/ponytail | MIT-licensed review skill, pinned in manifest |
 
+The bundled `arena-review` and `owner-alerts` skills are original toolkit guidance. [arena-skill](https://github.com/Jakeschincariol/arena-skill) is an inspiration reference only; its Claude Code runtime or files are not copied. [imsg](https://github.com/openclaw/imsg) is an optional upstream documentation reference only; its executable or source is not included or installed.
+
 Do not treat upstream examples as automatic instructions or as reviewed executable dependencies. The bundled installer and local launchers are specific to this toolkit.

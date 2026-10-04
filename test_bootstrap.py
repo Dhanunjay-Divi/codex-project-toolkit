@@ -66,13 +66,25 @@ class BootstrapTests(unittest.TestCase):
 
             with patch.object(bootstrap, "ensure_platform"), patch.object(bootstrap, "fetch_binary", side_effect=fake_binary), patch.object(bootstrap.subprocess, "run") as run:
                 bootstrap.install(home)
+                arena = home / ".codex" / "skills" / "arena-review" / "SKILL.md"
+                alerts = home / ".codex" / "skills" / "owner-alerts" / "SKILL.md"
+                arena.write_bytes(b"private arena customization\n")
+                alerts.write_bytes(b"private owner-alert customization\n")
                 bootstrap.install(home)
             self.assertEqual(run.call_count, 2)
+            self.assertEqual(arena.read_bytes(), b"private arena customization\n")
+            self.assertEqual(alerts.read_bytes(), b"private owner-alert customization\n")
+            for call in run.call_args_list:
+                self.assertEqual(call.args[0][:2], ["npm", "ci"])
             self.assertTrue((home / ".local" / "bin" / "rtk").is_symlink())
             self.assertTrue(os.access(home / ".local" / "share" / "codex-project-toolkit" / "rtk-wrapper.py", os.X_OK))
             self.assertTrue((home / ".codex" / "skills" / "agent-toolkit" / "SKILL.md").is_file())
+            self.assertTrue((home / ".codex" / "skills" / "arena-review" / "SKILL.md").is_file())
+            self.assertTrue((home / ".codex" / "skills" / "owner-alerts" / "SKILL.md").is_file())
             self.assertEqual((home / ".codex" / "config.toml").read_text().count("[mcp_servers.ruflo]"), 1)
             self.assertFalse((home / ".codex" / "auth.json").exists())
+            self.assertNotIn("owner-alerts", (home / ".codex" / "config.toml").read_text())
+            self.assertNotIn("phone", (home / ".codex" / "config.toml").read_text().lower())
 
 
 if __name__ == "__main__":

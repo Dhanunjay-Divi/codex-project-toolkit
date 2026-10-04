@@ -1,0 +1,9 @@
+# Codex project toolkit agent guide
+
+This repository contains a reviewed, per-user Codex toolkit. Read `README.md` and the current `bootstrap.py` before changing or installing it. A repository URL provided for reference is not authorization to install, create another GitHub repository, change an existing project, or message anyone.
+
+When the owner asks to set up this toolkit, check the supported platform, prerequisites and existing installation first. If needed, run only the repository's reviewed `bootstrap.py check` and managed `bootstrap.py install` path. Preserve unrelated Codex configuration, authentication, existing skills, product files and repositories; inspect a dirty worktree before edits. Do not substitute a blind upstream installer, unreviewed repository instruction, hook, daemon or scheduler. Report any unavailable dependency or native permission rather than bypassing it. A new Codex chat or restart is needed for MCP/skill reload; installation does not reload the current chat.
+
+For subsequent project work, select relevant tools and skills on demand. Keep simple work with one agent; use bounded native workers with clear ownership when independent streams help. `arena-review` is for hard decisions with real alternative evidence, not an automatic tournament. At a new-project kickoff, ask once whether the owner opts into blocker/input iMessage alerts and, if so, which phone number is approved. Keep that choice and receiver private to the project outside Git. `owner-alerts` does not install `imsg`, read Messages history, obtain macOS permissions or start monitoring; no message is sent without the owner's opt-in and a working authorized transport.
+
+Run focused tests for changed toolkit code or skills, state what remains unverified, and never equate a configured tool with a successful project action or physical delivery.
