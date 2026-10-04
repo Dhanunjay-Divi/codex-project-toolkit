@@ -31,6 +31,8 @@ Use Ruflo for decisions and task metadata with the canonical absolute `project_r
 Use Codebase Memory only after attaching a project; its index is private to that project.
 Use RTK selectively for noisy, low-risk shell output. Keep raw test and security output when exact evidence matters.
 Load skills only when relevant. Agency Agents is a role-reference library, not an automatic workforce.
+Use arena-review for difficult unresolved decisions involving actual native concurrency. When owner intervention is needed, use owner-alerts guidance; onboarding may ask for a phone/permission once, keep it private to that project, and never place it in Git.
+Notify the owner and bold any recommendation to change the chat model or reasoning level; do not claim an unsupported automatic switch.
 Do not copy credentials, tasks, memory, or indexes across projects or accounts.
 """
 RTK_NOTE = """\
@@ -191,7 +193,7 @@ def install(home):
         print("Keeping existing RTK command:", link)
     else:
         link.symlink_to(base / "rtk-wrapper.py")
-    for skill in ("ui-ux-pro-max", "ponytail-review", "agent-toolkit"):
+    for skill in ("ui-ux-pro-max", "ponytail-review", "agent-toolkit", "arena-review", "owner-alerts"):
         copy_tree_if_absent(payload / "skills" / skill, home / ".codex" / "skills" / skill)
     copy_tree_if_absent(payload / "agency-agents", base / "agency-agents")
     configure_codex(home / ".codex", base)
